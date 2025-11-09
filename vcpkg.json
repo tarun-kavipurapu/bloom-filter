@@ -1,0 +1,10 @@
+{
+  "name": "bloom-filter",
+  "version": "1.0.0",
+  "dependencies": [
+    "murmurhash",
+    "fmt"
+  ]
+}
+
+

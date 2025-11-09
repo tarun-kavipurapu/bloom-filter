@@ -1,0 +1,35 @@
+cmake_minimum_required(VERSION 3.21)
+
+# Project info
+project(bloom_filter  LANGUAGES CXX)
+
+# Enable C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# ---- vcpkg Integration ----
+# If vcpkg toolchain file isn't set externally, set it here
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        CACHE FILEPATH "Vcpkg toolchain file")
+endif()
+
+
+find_package(murmurhash CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+
+# Add src files
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Link packages installed via vcpkg
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    murmurhash::murmurhash
+    fmt::fmt
+)
+
+# If you want to add other packages later, uncomment and modify these:
+#find_package(spdlog CONFIG REQUIRED)
+#target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog)
+
